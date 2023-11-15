@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.random.things.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "MinecraftMixin",
+    "GuiInGameMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
