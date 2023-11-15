@@ -4,7 +4,7 @@ import btw.community.randomthings.RandomThingsAddon;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 
 public class RandomThingsPreLaunchInitializer implements PreLaunchEntrypoint {
-    /**s
+    /*
      * Runs the PreLaunch entrypoint to register BTW-Addon.
      * Don't initialize anything else here, use
      * the method Initialize() in the Addon.

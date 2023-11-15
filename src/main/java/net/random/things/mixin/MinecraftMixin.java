@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import btw.community.randomthings.RandomThingsAddon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.GameSettings;
 
@@ -17,13 +18,13 @@ public class MinecraftMixin {
     @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKey()I", ordinal = 13)) //at = @At(value = "INVOKE", target = "if")
     private int redirectF5Call() {
         int actualKeyPressed = Keyboard.getEventKey();
-        if(actualKeyPressed == Keyboard.KEY_Z){
+        if(RandomThingsAddon.first_person_key.pressed){
             gameSettings.thirdPersonView = 0;
         }
-        if(actualKeyPressed == Keyboard.KEY_X){
+        if(RandomThingsAddon.third_person_key.pressed){
             gameSettings.thirdPersonView = 1;
         }
-        if(actualKeyPressed == Keyboard.KEY_C){
+        if(RandomThingsAddon.backwards_facing_key.pressed){
             gameSettings.thirdPersonView = 2;
         }
         if (actualKeyPressed == Keyboard.KEY_F5){
