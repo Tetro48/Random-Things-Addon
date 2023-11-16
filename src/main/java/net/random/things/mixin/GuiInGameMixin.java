@@ -22,7 +22,7 @@ public class GuiInGameMixin {
 
     @Inject(method = "Lnet/minecraft/src/GuiIngame;drawPenaltyText(II)V", at = @At("TAIL"))
     private void drawTimer(int iScreenX, int iScreenY, CallbackInfo cbi){
-        if(!mc.thePlayer.isDead){
+        if(!mc.thePlayer.isDead && !MinecraftServer.getIsServer()){
             FontRenderer fontRenderer = this.mc.fontRenderer;
             String textToShow = secToTime((int)(MinecraftServer.getServer().worldServers[0].getWorldTime() / 20));
             int stringWidth = fontRenderer.getStringWidth(textToShow);

@@ -1,7 +1,5 @@
 package net.random.things;
 
-import org.jline.utils.InputStreamReader;
-
 import btw.AddonHandler;
 import btw.community.randomthings.RandomThingsAddon;
 import net.fabricmc.api.ModInitializer;
