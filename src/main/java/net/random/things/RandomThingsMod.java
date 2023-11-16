@@ -1,5 +1,7 @@
 package net.random.things;
 
+import org.jline.utils.InputStreamReader;
+
 import btw.AddonHandler;
 import btw.community.randomthings.RandomThingsAddon;
 import net.fabricmc.api.ModInitializer;
@@ -18,5 +20,4 @@ public class RandomThingsMod implements ModInitializer {
 		RandomThingsAddon.getInstance().initKeybind();
 		AddonHandler.logMessage("Hello Fabric world!");
 	}
-
 }

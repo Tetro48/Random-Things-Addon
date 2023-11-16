@@ -1,8 +1,10 @@
-# BTW-gradle-fabric-example
+# Random Things
 
 This repository is based on the [BTW-Gradle](https://github.com/BTW-Community/BTW-gradle) and the [Example Mod](https://github.com/minecraft-cursed-legacy/Example-Mod)
 repositories, combining them to enable fabric development for the Better Than Wolves mod.
 **This repository was only tested for client-side development yet.** 
+
+(THIS ADDON ADDS A TIMER AND THREE KEYS FOR CAMERA VIEW INSTEAD OF A SINGLE BUTTON, MORE IS TO BE ADDED)  
 
 ## Quick Start
 
