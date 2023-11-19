@@ -30,7 +30,7 @@ public class MinecraftMixin {
             if(RandomThingsAddon.backwards_facing_key.pressed){
                 gameSettings.thirdPersonView = 2;
             }
-            if (actualKeyPressed == Keyboard.KEY_F5 && RandomThingsAddon.f5Vanillaenabled){
+            if (actualKeyPressed == Keyboard.KEY_F5 && !RandomThingsAddon.f5Vanillaenabled){
                 System.out.println("pressed f5?");
                 return 0;
             }
