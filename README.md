@@ -9,7 +9,7 @@ repositories, combining them to enable fabric development for the Better Than Wo
 ## Questions
 
 ### How do i disable the F5 change?
-1.launch the game and quit once its fully done launching  
+1.launch the game and quit once its fully done launching   
 2.click on the instance in multimc (or your fork of choice)  
 3.click "folder"  
 4.open ".minecraft" in the folder opened just then  
