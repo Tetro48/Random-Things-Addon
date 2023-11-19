@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import btw.util.status.StatusEffect;
 import net.minecraft.client.Minecraft;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiIngame;
 
@@ -22,12 +21,6 @@ public class GuiInGameMixin {
 
     @Inject(method = "Lnet/minecraft/src/GuiIngame;drawPenaltyText(II)V", at = @At("TAIL"))
     private void drawTimer(int iScreenX, int iScreenY, CallbackInfo cbi){
-        /*if(Minecraft.getMinecraft().theWorld == null){
-            cbi.cancel();
-        }
-        if(MinecraftServer.getIsServer()){
-            cbi.cancel();
-        }*/
         if(!mc.thePlayer.isDead){
             FontRenderer fontRenderer = this.mc.fontRenderer;
             String textToShow = secToTime((int)(Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20));

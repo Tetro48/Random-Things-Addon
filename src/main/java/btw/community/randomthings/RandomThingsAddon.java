@@ -1,6 +1,7 @@
 package btw.community.randomthings;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import org.lwjgl.input.Keyboard;
 
@@ -12,6 +13,8 @@ import net.minecraft.src.KeyBinding;
 import net.minecraft.src.StatCollector;
 
 public class RandomThingsAddon extends BTWAddon {
+    public static boolean f5enabled;
+
     private static RandomThingsAddon instance;
     public static KeyBinding third_person_key;
     public static KeyBinding first_person_key;
@@ -24,6 +27,16 @@ public class RandomThingsAddon extends BTWAddon {
     @Override
     public void initialize() {
         AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
+    }
+
+    @Override
+    public void preInitialize() {
+        registerProperty("f5enabled", "true", "Set this to false to fully disable the F5 change.");
+    }
+
+    @Override
+    public void handleConfigProperties(Map<String, String> propertyValues) {
+        f5enabled = Boolean.parseBoolean(propertyValues.get("f5enabled"));
     }
 
     public static RandomThingsAddon getInstance() {
