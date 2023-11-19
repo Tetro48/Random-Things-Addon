@@ -20,18 +20,20 @@ public class MinecraftMixin {
     @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKey()I", ordinal = 13)) //at = @At(value = "INVOKE", target = "if")
     private int redirectF5Call() {
         int actualKeyPressed = Keyboard.getEventKey();
-        if(RandomThingsAddon.first_person_key.pressed){
-            gameSettings.thirdPersonView = 0;
-        }
-        if(RandomThingsAddon.third_person_key.pressed){
-            gameSettings.thirdPersonView = 1;
-        }
-        if(RandomThingsAddon.backwards_facing_key.pressed){
-            gameSettings.thirdPersonView = 2;
-        }
-        if (actualKeyPressed == Keyboard.KEY_F5 && RandomThingsAddon.f5enabled){
-            System.out.println("pressed f5?");
-            return 0;
+        if(RandomThingsAddon.f5enabled){
+            if(RandomThingsAddon.first_person_key.pressed){
+                gameSettings.thirdPersonView = 0;
+            }
+            if(RandomThingsAddon.third_person_key.pressed){
+                gameSettings.thirdPersonView = 1;
+            }
+            if(RandomThingsAddon.backwards_facing_key.pressed){
+                gameSettings.thirdPersonView = 2;
+            }
+            if (actualKeyPressed == Keyboard.KEY_F5){
+                System.out.println("pressed f5?");
+                return 0;
+            }
         }
         return actualKeyPressed;
     }
