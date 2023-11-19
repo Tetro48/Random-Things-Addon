@@ -6,6 +6,12 @@ repositories, combining them to enable fabric development for the Better Than Wo
 
 (THIS ADDON ADDS A TIMER AND THREE KEYS FOR CAMERA VIEW INSTEAD OF A SINGLE BUTTON, MORE IS TO BE ADDED)  
 
+## Questions
+
+### How do i disable the F5 change?
+check this message here on the discord server  
+https://discord.com/channels/252863009590870017/1168250578057564230/1175911700692738158  
+
 ## Quick Start
 
 * Clone this repository

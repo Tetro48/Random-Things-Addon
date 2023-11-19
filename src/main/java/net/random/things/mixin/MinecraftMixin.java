@@ -17,7 +17,7 @@ public class MinecraftMixin {
 
     //public static boolean f5Change
 
-    @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKey()I", ordinal = 13)) //at = @At(value = "INVOKE", target = "if")
+    @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKey()I", ordinal = 13))
     private int redirectF5Call() {
         int actualKeyPressed = Keyboard.getEventKey();
         if(RandomThingsAddon.f5enabled){
