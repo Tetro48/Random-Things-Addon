@@ -6,18 +6,6 @@ repositories, combining them to enable fabric development for the Better Than Wo
 
 (THIS ADDON ADDS A TIMER AND THREE KEYS FOR CAMERA VIEW INSTEAD OF A SINGLE BUTTON, MORE IS TO BE ADDED)  
 
-## Questions
-
-### How do i disable the F5 change?
-1.launch the game and quit once its fully done launching   
-2.click on the instance in multimc (or your fork of choice)  
-3.click "folder"  
-4.open ".minecraft" in the folder opened just then  
-5.open "config" in the folder you just opened  
-6.open up "Rand.properties" in your text editor of choice  
-7.change f5_change_enabled to false  
-8.save and relaunch and it should take affect!  
-
 ## Quick Start
 
 * Clone this repository

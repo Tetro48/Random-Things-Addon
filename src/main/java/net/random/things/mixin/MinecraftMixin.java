@@ -19,8 +19,7 @@ public class MinecraftMixin {
 
     @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKey()I", ordinal = 13))
     private int redirectF5Call() {
-        int actualKeyPressed = Keyboard.getEventKey();
-        if(RandomThingsAddon.f5enabled){
+        /*if(RandomThingsAddon.f5enabled){
             if(RandomThingsAddon.first_person_key.pressed){
                 gameSettings.thirdPersonView = 0;
             }
@@ -34,6 +33,17 @@ public class MinecraftMixin {
                 System.out.println("pressed f5?");
                 return 0;
             }
+        }
+        return actualKeyPressed;*/
+        int actualKeyPressed = Keyboard.getEventKey();
+        if(RandomThingsAddon.first_person_key.pressed){
+            gameSettings.thirdPersonView = 0;
+        }
+        if(RandomThingsAddon.third_person_key.pressed){
+            gameSettings.thirdPersonView = 1;
+        }
+        if(RandomThingsAddon.backwards_facing_key.pressed){
+            gameSettings.thirdPersonView = 2;
         }
         return actualKeyPressed;
     }
