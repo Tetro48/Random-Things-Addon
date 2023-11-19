@@ -15,7 +15,7 @@ repositories, combining them to enable fabric development for the Better Than Wo
 4.open ".minecraft" in the folder opened just then  
 5.open "config" in the folder you just opened  
 6.open up "Rand.properties" in your text editor of choice  
-7.change this true to a false  
+7.change f5_change_enabled to false  
 8.save and relaunch and it should take affect!  
 
 ## Quick Start
