@@ -9,8 +9,14 @@ repositories, combining them to enable fabric development for the Better Than Wo
 ## Questions
 
 ### How do i disable the F5 change?
-check this message here on the discord server  
-https://discord.com/channels/252863009590870017/1168250578057564230/1175911700692738158  
+1.launch the game and quit once its fully done launching (after installing the updated version)  
+2.click on the instance in multimc (or your fork of choice)  
+3.click "folder"  
+4.open ".minecraft" in the folder opened just then  
+5.open "config" in the folder you just opened  
+6.open up "Rand.properties" in your text editor of choice  
+7.change this true to a false  
+8.save and relaunch and it should take affect!  
 
 ## Quick Start
 
