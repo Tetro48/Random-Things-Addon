@@ -14,6 +14,7 @@ import net.minecraft.src.StatCollector;
 
 public class RandomThingsAddon extends BTWAddon {
     public static boolean f5enabled;
+    public static boolean f5Vanillaenabled;
 
     private static RandomThingsAddon instance;
     public static KeyBinding third_person_key;
@@ -31,12 +32,15 @@ public class RandomThingsAddon extends BTWAddon {
 
     @Override
     public void preInitialize() {
-        registerProperty("f5enabled", "true", "Set this to false to fully disable the F5 change.");
+        registerProperty("f5_change_enabled", "true", "Set this to false to disable the F5 change.");
+        registerProperty("f5_vanilla_enabled", "true", "Set this to false to disable F5 from working.");
+
     }
 
     @Override
     public void handleConfigProperties(Map<String, String> propertyValues) {
-        f5enabled = Boolean.parseBoolean(propertyValues.get("f5enabled"));
+        f5enabled = Boolean.parseBoolean(propertyValues.get("f5_change_enabled"));
+        f5Vanillaenabled = Boolean.parseBoolean(propertyValues.get("f5_change_enabled"));
     }
 
     public static RandomThingsAddon getInstance() {
