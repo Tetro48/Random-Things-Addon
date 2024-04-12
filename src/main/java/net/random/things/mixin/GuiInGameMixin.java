@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import btw.community.randomthings.RandomThingsAddon;
 import btw.util.status.StatusEffect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.FontRenderer;
@@ -19,15 +20,32 @@ public class GuiInGameMixin {
     @Shadow
     private Minecraft mc;
 
+    private int amountRendered = 0;
+
     @Inject(method = "Lnet/minecraft/src/GuiIngame;drawPenaltyText(II)V", at = @At("TAIL"))
     private void drawTimer(int iScreenX, int iScreenY, CallbackInfo cbi){
         if(!mc.thePlayer.isDead){
+            amountRendered = 0;
             FontRenderer fontRenderer = this.mc.fontRenderer;
-            String textToShow = secToTime((int)(Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20));
+            String textToShow = "Real Time: " +  secToTime((int)(Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20));
             int stringWidth = fontRenderer.getStringWidth(textToShow);
             ArrayList<StatusEffect> activeStatuses = mc.thePlayer.getAllActiveStatusEffects();
-            fontRenderer.drawStringWithShadow(textToShow, iScreenX - stringWidth, iScreenY-(10 * activeStatuses.size()), 0XFFFFFF);
+            
+            if(RandomThingsAddon.shouldShowRealTimer){
+                renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
+            }
+
+            textToShow = "Minecraft Date: " + (((int)Math.ceil(Minecraft.getMinecraft().theWorld.getWorldTime()/24000))+1);
+            stringWidth = fontRenderer.getStringWidth(textToShow);
+            if(RandomThingsAddon.shouldShowDateTimer){
+                renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
+            }
         }
+    }
+
+    private void renderText(String text, int stringWidth, int iScreenX, int iScreenY, FontRenderer fontRenderer, ArrayList<StatusEffect> activeStatuses){
+        fontRenderer.drawStringWithShadow(text, iScreenX - stringWidth, iScreenY-(10 * (activeStatuses.size()+amountRendered)), 0XFFFFFF);
+        amountRendered++;
     }
 
     //https://stackoverflow.com/questions/6118922/convert-seconds-value-to-hours-minutes-seconds#:~:text=hours%20%3D%20totalSecs%20%2F%203600%3B%20minutes,%2C%20hours%2C%20minutes%2C%20seconds)%3B

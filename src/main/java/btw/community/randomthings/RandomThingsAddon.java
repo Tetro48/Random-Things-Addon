@@ -18,8 +18,11 @@ public class RandomThingsAddon extends BTWAddon {
     public static KeyBinding first_person_key;
     public static KeyBinding backwards_facing_key;
 
+    public static Boolean shouldShowDateTimer;
+    public static Boolean shouldShowRealTimer;
+
     private RandomThingsAddon() {
-        super("Random Things", "1.0.1", "Rand");
+        super("Random Things", "2", "Rand");
     }
 
     @Override
@@ -29,12 +32,14 @@ public class RandomThingsAddon extends BTWAddon {
 
     @Override
     public void preInitialize() {
-
+        this.registerProperty("EnableMinecraftDateTimer", "True", "Set if the minecraft date should show up or not");
+        this.registerProperty("EnableRealWorldTimer", "True", "Set if the real time timer should show up or not");
     }
 
     @Override
     public void handleConfigProperties(Map<String, String> propertyValues) {
-
+        shouldShowDateTimer = Boolean.parseBoolean(propertyValues.get("EnableMinecraftDateTimer"));
+        shouldShowRealTimer = Boolean.parseBoolean(propertyValues.get("EnableMinecraftDateTimer"));
     }
 
     public static RandomThingsAddon getInstance() {
