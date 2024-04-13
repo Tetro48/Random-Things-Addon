@@ -22,7 +22,7 @@ public class RandomThingsAddon extends BTWAddon {
     public static Boolean shouldShowRealTimer;
 
     private RandomThingsAddon() {
-        super("Random Things", "2", "Rand");
+        super("Random Things", "3", "Rand");
     }
 
     @Override
