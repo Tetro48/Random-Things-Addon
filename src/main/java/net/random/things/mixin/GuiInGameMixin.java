@@ -13,6 +13,7 @@ import btw.util.status.StatusEffect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiIngame;
+import net.minecraft.src.Material;
 
 
 @Mixin(GuiIngame.class)
@@ -26,6 +27,9 @@ public class GuiInGameMixin {
     private void drawTimer(int iScreenX, int iScreenY, CallbackInfo cbi){
         if(!mc.thePlayer.isDead){
             amountRendered = 0;
+            if(this.mc.thePlayer.isInsideOfMaterial(Material.water) || mc.thePlayer.getAir() < 300 ){
+                amountRendered++;
+            }
             FontRenderer fontRenderer = this.mc.fontRenderer;
             String textToShow = "Real Time: " +  secToTime((int)(Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20));
             int stringWidth = fontRenderer.getStringWidth(textToShow);
