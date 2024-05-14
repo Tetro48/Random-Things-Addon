@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "randomthings",
+  "version": "${version}",
+  "name": "Random Things",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://legacyfabric.net/",
+    "sources": "https://github.com/Legacy-Fabric/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/randomthings/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.random.things.RandomThingsMod"
+    ],
+    "btw:addon": [
+      "btw.random.things.RandomThingsAddon"
+    ]
+  },
+  "custom": {
+    "btw:addon_prefix": "Rand"
+  },
+  "mixins": [
+    "randomthings.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.19",
+    "minecraft": "1.6.4"
+  }
+}
