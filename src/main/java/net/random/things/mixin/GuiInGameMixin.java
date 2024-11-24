@@ -40,11 +40,22 @@ public class GuiInGameMixin {
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
             }
             long worldTime = Minecraft.getMinecraft().theWorld.getWorldTime();
-            textToShow = (worldTime % 24000 < 12000 ? "Day " : "Night ") + (((int)Math.ceil(worldTime/24000))+1);
+            textToShow = getTimeType(worldTime) + (((int)Math.ceil(worldTime/24000))+1);
             stringWidth = fontRenderer.getStringWidth(textToShow);
             if(RandomThingsAddon.shouldShowDateTimer){
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
             }
+        }
+    }
+
+    String getTimeType(long worldTime)
+    {
+        if (worldTime % 24000 < 12500 || worldTime % 24000 > 23500) {
+            return "Day ";
+        }
+        else
+        {
+            return "Night ";
         }
     }
 
