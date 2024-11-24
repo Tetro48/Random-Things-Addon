@@ -32,15 +32,15 @@ public class GuiInGameMixin {
                 amountRendered++;
             }
             FontRenderer fontRenderer = this.mc.fontRenderer;
-            String textToShow = "Real Time: " +  secToTime((int)(Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20));
+            String textToShow = secToTime((int)(Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20));
             int stringWidth = fontRenderer.getStringWidth(textToShow);
             ArrayList<StatusEffect> activeStatuses = mc.thePlayer.getAllActiveStatusEffects();
             
             if(RandomThingsAddon.shouldShowRealTimer){
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
             }
-
-            textToShow = "Minecraft Date: " + (((int)Math.ceil(Minecraft.getMinecraft().theWorld.getWorldTime()/24000))+1);
+            long worldTime = Minecraft.getMinecraft().theWorld.getWorldTime();
+            textToShow = (worldTime % 24000 < 12000 ? "Day " : "Night ") + (((int)Math.ceil(worldTime/24000))+1);
             stringWidth = fontRenderer.getStringWidth(textToShow);
             if(RandomThingsAddon.shouldShowDateTimer){
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
@@ -62,7 +62,7 @@ public class GuiInGameMixin {
             minutes %= 60;
             if( hours >= 24) {
                 int days = hours / 24;
-                return String.format("%d days %02d:%02d:%02d", days,hours%24, minutes, seconds);
+                return String.format("%d:%02d:%02d:%02d", days,hours%24, minutes, seconds);
             }
             return String.format("%02d:%02d:%02d", hours, minutes, seconds);
         }

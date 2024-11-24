@@ -1,13 +1,6 @@
 # Random Things  
 
-(THIS ADDON ADDS 2 TIMERS AND THREE KEYS FOR CAMERA VIEW INSTEAD OF A SINGLE BUTTON, MORE IS TO BE ADDED)  
-wont work with vanilla launcher due to it stopping the game from launching for an unknown reason  
-
-
-# TODO:  
-1) for some reason, i cant get the text for the keybinds to work. fix them.  
-2) find out why this  mod doesnt work with the vanilla launcher, might never know due to it not generating a log  
-or even really launching.  
+(THIS ADDON ADDS 2 TIMERS AND THREE KEYS FOR CAMERA VIEW INSTEAD OF A SINGLE BUTTON, MORE IS TO BE ADDED)
 
 - [Quick start guide](#quick-start-guide)
   - [Introduction to the folder structure](#introduction-to-the-folder-structure)

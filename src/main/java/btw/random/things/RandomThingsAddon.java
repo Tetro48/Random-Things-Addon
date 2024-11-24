@@ -41,7 +41,7 @@ public class RandomThingsAddon extends BTWAddon {
     @Override
     public void handleConfigProperties(Map<String, String> propertyValues) {
         shouldShowDateTimer = Boolean.parseBoolean(propertyValues.get("EnableMinecraftDateTimer"));
-        shouldShowRealTimer = Boolean.parseBoolean(propertyValues.get("EnableMinecraftDateTimer"));
+        shouldShowRealTimer = Boolean.parseBoolean(propertyValues.get("EnableRealWorldTimer"));
     }
 
     @Override
