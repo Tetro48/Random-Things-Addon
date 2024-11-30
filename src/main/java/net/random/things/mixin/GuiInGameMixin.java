@@ -10,11 +10,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import btw.random.things.RandomThingsAddon;
 import btw.util.status.StatusEffect;
-//import net.minecraft.client.Minecraft;
-import net.minecraft.src.Minecraft;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiIngame;
 import net.minecraft.src.Material;
+import net.minecraft.src.Minecraft;
+import net.minecraft.src.WorldClient;
 
 
 @Mixin(GuiIngame.class)
@@ -27,20 +27,21 @@ public class GuiInGameMixin {
     @Inject(method = "Lnet/minecraft/src/GuiIngame;drawPenaltyText(II)V", at = @At("TAIL"))
     private void drawTimer(int iScreenX, int iScreenY, CallbackInfo cbi){
         if(!mc.thePlayer.isDead){
+            WorldClient theWorld = Minecraft.getMinecraft().theWorld;
             amountRendered = 0;
             if(this.mc.thePlayer.isInsideOfMaterial(Material.water) || mc.thePlayer.getAir() < 300 ){
                 amountRendered++;
             }
             FontRenderer fontRenderer = this.mc.fontRenderer;
-            String textToShow = secToTime((int)(Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20));
+            String textToShow = secToTime((int)(theWorld.getTotalWorldTime() / 20));
             int stringWidth = fontRenderer.getStringWidth(textToShow);
             ArrayList<StatusEffect> activeStatuses = mc.thePlayer.getAllActiveStatusEffects();
             
             if(RandomThingsAddon.shouldShowRealTimer){
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
             }
-            long worldTime = Minecraft.getMinecraft().theWorld.getWorldTime();
-            textToShow = getTimeType(worldTime) + (((int)Math.ceil(worldTime/24000))+1);
+            long worldTime = theWorld.getWorldTime();
+            textToShow = getTimeType(theWorld) + (((int)Math.ceil(worldTime/24000))+1);
             stringWidth = fontRenderer.getStringWidth(textToShow);
             if(RandomThingsAddon.shouldShowDateTimer){
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
@@ -48,13 +49,21 @@ public class GuiInGameMixin {
         }
     }
 
-    String getTimeType(long worldTime)
+    String getTimeType(WorldClient world)
     {
-        if (worldTime % 24000 < 12500 || worldTime % 24000 > 23500) {
+        if (this.mc.thePlayer.dimension != 0) {
+            long worldTime = world.getWorldTime();
+            if (worldTime % 24000 < 8000 && worldTime % 24000 > 4000) {
+                return "Day ";
+            }
+            else {
+                return "§k???§r ";
+            }
+        }
+        else if (world.isDaytime()) {
             return "Day ";
         }
-        else
-        {
+        else {
             return "Night ";
         }
     }
@@ -75,9 +84,9 @@ public class GuiInGameMixin {
                 int days = hours / 24;
                 return String.format("%d:%02d:%02d:%02d", days,hours%24, minutes, seconds);
             }
-            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            return String.format("%d:%02d:%02d", hours, minutes, seconds);
         }
-        return String.format("00:%02d:%02d", minutes, seconds);
+        return String.format("%02d:%02d", minutes, seconds);
     }
     /*
      * Duration duration = Duration.ofSeconds(seconds);
