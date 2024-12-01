@@ -21,6 +21,7 @@ public class RandomThingsAddon extends BTWAddon {
 
     public static Boolean shouldShowDateTimer;
     public static Boolean shouldShowRealTimer;
+    public static String timerAlignment;
 
     public RandomThingsAddon() {
         super();
@@ -36,12 +37,27 @@ public class RandomThingsAddon extends BTWAddon {
     public void preInitialize() {
         this.registerProperty("EnableMinecraftDateTimer", "True", "Set if the minecraft date should show up or not");
         this.registerProperty("EnableRealWorldTimer", "True", "Set if the real time timer should show up or not");
+        this.registerProperty("TimerAlignment", "Hotbar", """
+        Places timers on some spots.
+        # Allowed case-insensitive strings: "Hotbar", "TopLeft", "Top", "TopRight", "BottomLeft", "BottomRight" """);
     }
 
     @Override
     public void handleConfigProperties(Map<String, String> propertyValues) {
         shouldShowDateTimer = Boolean.parseBoolean(propertyValues.get("EnableMinecraftDateTimer"));
         shouldShowRealTimer = Boolean.parseBoolean(propertyValues.get("EnableRealWorldTimer"));
+        timerAlignment = propertyValues.get("TimerAlignment").toLowerCase();
+        switch (timerAlignment) {
+            case "topleft":
+            case "topright":
+            case "top":
+            case "bottomleft":
+            case "bottomright":
+            case "hotbar":
+                break;
+            default:
+                timerAlignment = "hotbar";
+        }
     }
 
     @Override

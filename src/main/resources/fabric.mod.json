@@ -3,13 +3,15 @@
   "id": "randomthings",
   "version": "${version}",
   "name": "Random Things",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Random things! This contains 2 timers, and 3 custom camera keybinds",
   "authors": [
-    "Me!"
+    "koji-aito",
+    "Tetro48"
   ],
   "contact": {
-    "homepage": "https://legacyfabric.net/",
-    "sources": "https://github.com/Legacy-Fabric/fabric-example-mod"
+    "homepage": "https://github.com/BTW-Community/Random-Things-Addon",
+    "sources": "https://github.com/BTW-Community/Random-Things-Addon.git",
+    "issues": "https://github.com/BTW-Community/Random-Things-Addon/issues"
   },
   "license": "CC0-1.0",
   "icon": "assets/randomthings/icon.png",

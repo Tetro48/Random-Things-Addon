@@ -14,8 +14,8 @@ import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiIngame;
 import net.minecraft.src.Material;
 import net.minecraft.src.Minecraft;
+import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.WorldClient;
-
 
 @Mixin(GuiIngame.class)
 public class GuiInGameMixin {
@@ -23,14 +23,21 @@ public class GuiInGameMixin {
     private Minecraft mc;
 
     private int amountRendered = 0;
+    private int layers = 1;
 
     @Inject(method = "Lnet/minecraft/src/GuiIngame;drawPenaltyText(II)V", at = @At("TAIL"))
     private void drawTimer(int iScreenX, int iScreenY, CallbackInfo cbi){
         if(!mc.thePlayer.isDead){
             WorldClient theWorld = Minecraft.getMinecraft().theWorld;
             amountRendered = 0;
-            if(this.mc.thePlayer.isInsideOfMaterial(Material.water) || mc.thePlayer.getAir() < 300 ){
+            if(RandomThingsAddon.timerAlignment == "hotbar" && (this.mc.thePlayer.isInsideOfMaterial(Material.water) || mc.thePlayer.getAir() < 300)){
                 amountRendered++;
+            }
+            if(RandomThingsAddon.shouldShowRealTimer && RandomThingsAddon.shouldShowDateTimer) {
+                layers = 2;
+            }
+            else {
+                layers = 1;
             }
             FontRenderer fontRenderer = this.mc.fontRenderer;
             String textToShow = secToTime((int)(theWorld.getTotalWorldTime() / 20));
@@ -69,7 +76,42 @@ public class GuiInGameMixin {
     }
 
     private void renderText(String text, int stringWidth, int iScreenX, int iScreenY, FontRenderer fontRenderer, ArrayList<StatusEffect> activeStatuses){
-        fontRenderer.drawStringWithShadow(text, iScreenX - stringWidth, iScreenY-(10 * (activeStatuses.size()+amountRendered)), 0XFFFFFF);
+        ScaledResolution scaledResolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+        boolean isDebugEnabled = this.mc.gameSettings.showDebugInfo;
+        int initial_top_y = 2 + 10 * amountRendered;
+        int bottom_y = scaledResolution.getScaledHeight() + 10 * amountRendered - 10 * layers - 2;
+        if (isDebugEnabled)
+        {
+            initial_top_y = bottom_y;
+        }
+        int x, y;
+        switch (RandomThingsAddon.timerAlignment) {
+            case "topleft" -> {
+                x = 2;
+                y = initial_top_y;
+            }
+            case "topright" -> {
+                x = scaledResolution.getScaledWidth() - stringWidth - 1;
+                y = initial_top_y;
+            }
+            case "top" -> {
+                x = (scaledResolution.getScaledWidth() - stringWidth) / 2;
+                y = 1 + 10 * amountRendered;
+            }
+            case "bottomleft" -> {
+                x = 2;
+                y = bottom_y;
+            }
+            case "bottomright" -> {
+                x = scaledResolution.getScaledWidth() - stringWidth - 2;
+                y = bottom_y;
+            }
+            default -> {
+                x = iScreenX - stringWidth;
+                y = iScreenY-(10 * (activeStatuses.size()+amountRendered));
+            }
+        }
+        fontRenderer.drawStringWithShadow(text, x, y, 0XFFFFFF);
         amountRendered++;
     }
 
@@ -86,7 +128,7 @@ public class GuiInGameMixin {
             }
             return String.format("%d:%02d:%02d", hours, minutes, seconds);
         }
-        return String.format("%02d:%02d", minutes, seconds);
+        return String.format("%d:%02d", minutes, seconds);
     }
     /*
      * Duration duration = Duration.ofSeconds(seconds);
