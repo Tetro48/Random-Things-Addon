@@ -78,9 +78,9 @@ public class GuiInGameMixin {
     private void renderText(String text, int stringWidth, int iScreenX, int iScreenY, FontRenderer fontRenderer, ArrayList<StatusEffect> activeStatuses){
         ScaledResolution scaledResolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         boolean isDebugEnabled = this.mc.gameSettings.showDebugInfo;
-        int initial_top_y = 2 + 10 * amountRendered;
-        int bottom_y = scaledResolution.getScaledHeight() + 10 * amountRendered - 10 * layers - 2;
-        if (isDebugEnabled)
+        int initial_top_y = 2 - 10 * amountRendered + 10 * layers - 10;
+        int bottom_y = scaledResolution.getScaledHeight() - 10 * amountRendered - 12;
+        if (isDebugEnabled && !RandomThingsAddon.timerAlignment.equals("top"))
         {
             initial_top_y = bottom_y;
         }
@@ -91,12 +91,12 @@ public class GuiInGameMixin {
                 y = initial_top_y;
             }
             case "topright" -> {
-                x = scaledResolution.getScaledWidth() - stringWidth - 1;
+                x = scaledResolution.getScaledWidth() - stringWidth - 2;
                 y = initial_top_y;
             }
             case "top" -> {
                 x = (scaledResolution.getScaledWidth() - stringWidth) / 2;
-                y = 1 + 10 * amountRendered;
+                y = initial_top_y;
             }
             case "bottomleft" -> {
                 x = 2;
