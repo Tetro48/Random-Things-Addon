@@ -1,9 +1,12 @@
 package net.random.things.mixin;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,18 +22,24 @@ import net.minecraft.src.WorldClient;
 
 @Mixin(GuiIngame.class)
 public class GuiInGameMixin {
+    @Final
     @Shadow
     private Minecraft mc;
 
+    @Shadow @Final private Random rand;
     private int amountRendered = 0;
     private int layers = 1;
 
-    @Inject(method = "Lnet/minecraft/src/GuiIngame;drawPenaltyText(II)V", at = @At("TAIL"))
+    @Unique
+    private String randomLengthString = "???";
+
+    @Inject(method = "drawPenaltyText(II)V", at = @At("TAIL"))
     private void drawTimer(int iScreenX, int iScreenY, CallbackInfo cbi){
         if(!mc.thePlayer.isDead){
             WorldClient theWorld = Minecraft.getMinecraft().theWorld;
+            if (theWorld.getTotalWorldTime() % 4 == 0) randomLengthString = Integer.toString((int)Math.pow(10, rand.nextInt(2, 5)));
             amountRendered = 0;
-            if(RandomThingsAddon.timerAlignment == "hotbar" && (this.mc.thePlayer.isInsideOfMaterial(Material.water) || mc.thePlayer.getAir() < 300)){
+            if(RandomThingsAddon.timerAlignment.equals("hotbar") && (this.mc.thePlayer.isInsideOfMaterial(Material.water) || mc.thePlayer.getAir() < 300)){
                 amountRendered++;
             }
             if(RandomThingsAddon.shouldShowRealTimer && RandomThingsAddon.shouldShowDateTimer) {
@@ -48,7 +57,7 @@ public class GuiInGameMixin {
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
             }
             long worldTime = theWorld.getWorldTime();
-            textToShow = getTimeType(theWorld) + (((int)Math.ceil(worldTime/24000))+1);
+            textToShow = getTimeType(theWorld) + (((int)Math.ceil(worldTime/24000d))+1);
             stringWidth = fontRenderer.getStringWidth(textToShow);
             if(RandomThingsAddon.shouldShowDateTimer){
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
@@ -64,7 +73,7 @@ public class GuiInGameMixin {
                 return "Day ";
             }
             else {
-                return "§k???§r ";
+                return "§k"+ randomLengthString +"§r ";
             }
         }
         else if (world.isDaytime()) {
@@ -79,10 +88,14 @@ public class GuiInGameMixin {
         ScaledResolution scaledResolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         boolean isDebugEnabled = this.mc.gameSettings.showDebugInfo;
         int initial_top_y = 2 - 10 * amountRendered + 10 * layers - 10;
+        int right_x = scaledResolution.getScaledWidth() - stringWidth - 2;
         int bottom_y = scaledResolution.getScaledHeight() - 10 * amountRendered - 12;
         if (isDebugEnabled && !RandomThingsAddon.timerAlignment.equals("top"))
         {
             initial_top_y = bottom_y;
+        }
+        if (this.mc.mcProfiler.profilingEnabled) {
+            right_x = 2;
         }
         int x, y;
         switch (RandomThingsAddon.timerAlignment) {
@@ -91,7 +104,7 @@ public class GuiInGameMixin {
                 y = initial_top_y;
             }
             case "topright" -> {
-                x = scaledResolution.getScaledWidth() - stringWidth - 2;
+                x = right_x;
                 y = initial_top_y;
             }
             case "top" -> {
@@ -103,7 +116,7 @@ public class GuiInGameMixin {
                 y = bottom_y;
             }
             case "bottomright" -> {
-                x = scaledResolution.getScaledWidth() - stringWidth - 2;
+                x = right_x;
                 y = bottom_y;
             }
             default -> {
