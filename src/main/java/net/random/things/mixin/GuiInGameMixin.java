@@ -57,7 +57,7 @@ public class GuiInGameMixin {
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
             }
             long worldTime = theWorld.getWorldTime();
-            textToShow = getTimeType(theWorld) + (((int)Math.ceil(worldTime/24000d))+1);
+            textToShow = getTimeType(theWorld) + (((int)Math.floor(worldTime/24000d))+1);
             stringWidth = fontRenderer.getStringWidth(textToShow);
             if(RandomThingsAddon.shouldShowDateTimer){
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
