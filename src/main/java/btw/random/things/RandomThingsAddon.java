@@ -25,6 +25,7 @@ public class RandomThingsAddon extends BTWAddon {
     public static Boolean shouldShowDateTimer;
     public static Boolean shouldShowRealTimer;
     public static String timerAlignment;
+    public static Boolean precisionMode;
 
     public RandomThingsAddon() {
         super();
@@ -43,6 +44,7 @@ public class RandomThingsAddon extends BTWAddon {
         this.registerProperty("TimerAlignment", "Hotbar", """
         Places timers on some spots.
         # Allowed case-insensitive strings: "Hotbar", "TopLeft", "Top", "TopRight", "BottomLeft", "BottomRight"\s""");
+        this.registerProperty("PrecisionMode", "False", "False: Standard level precision (not suitable for speedrunning)\n# True: Highest level, shows ticks");
     }
 
     @Override
@@ -61,6 +63,7 @@ public class RandomThingsAddon extends BTWAddon {
             default:
                 timerAlignment = "hotbar";
         }
+        precisionMode = Boolean.parseBoolean(propertyValues.get("PrecisionMode"));
     }
 
     @Override

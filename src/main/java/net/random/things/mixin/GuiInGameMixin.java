@@ -50,6 +50,9 @@ public class GuiInGameMixin {
             }
             FontRenderer fontRenderer = this.mc.fontRenderer;
             String textToShow = secToTime((int)(theWorld.getTotalWorldTime() / 20));
+            if (RandomThingsAddon.precisionMode) {
+                textToShow = "Total: " + ticksToTime(theWorld.getTotalWorldTime());
+            }
             int stringWidth = fontRenderer.getStringWidth(textToShow);
             ArrayList<StatusEffect> activeStatuses = mc.thePlayer.getAllActiveStatusEffects();
             
@@ -58,6 +61,9 @@ public class GuiInGameMixin {
             }
             long worldTime = theWorld.getWorldTime();
             textToShow = getTimeType(theWorld) + (((int)Math.floor(worldTime/24000d))+1);
+            if (RandomThingsAddon.precisionMode) {
+                textToShow = String.format("World: %s (D:%d)", ticksToTime(worldTime), (worldTime/24000L)+1);
+            }
             stringWidth = fontRenderer.getStringWidth(textToShow);
             if(RandomThingsAddon.shouldShowDateTimer){
                 renderText(textToShow, stringWidth, iScreenX, iScreenY, fontRenderer, activeStatuses);
@@ -65,6 +71,7 @@ public class GuiInGameMixin {
         }
     }
 
+    @Unique
     String getTimeType(WorldClient world)
     {
         if (this.mc.thePlayer.dimension != 0) {
@@ -84,6 +91,7 @@ public class GuiInGameMixin {
         }
     }
 
+    @Unique
     private void renderText(String text, int stringWidth, int iScreenX, int iScreenY, FontRenderer fontRenderer, ArrayList<StatusEffect> activeStatuses){
         ScaledResolution scaledResolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         boolean isDebugEnabled = this.mc.gameSettings.showDebugInfo;
@@ -142,6 +150,17 @@ public class GuiInGameMixin {
             return String.format("%d:%02d:%02d", hours, minutes, seconds);
         }
         return String.format("%d:%02d", minutes, seconds);
+    }
+    @Unique
+    String ticksToTime(long ticks) {
+        long total_seconds = ticks / 20;
+        long total_minutes = total_seconds / 60;
+        long total_hours = total_minutes / 60;
+        long total_days = total_hours / 24;
+        if (total_days > 0) return String.format("%d:%02d:%02d:%02d.%02d (%d)", total_days, total_hours%60, total_minutes%60, total_seconds%60, ticks%20 * 5, ticks);
+        if (total_hours > 0) return String.format("%d:%02d:%02d.%02d (%d)", total_hours%60, total_minutes%60, total_seconds%60, ticks%20 * 5, ticks);
+        if (total_minutes > 0) return String.format("%d:%02d.%02d (%d)", total_minutes%60, total_seconds%60, ticks%20 * 5, ticks);
+        return String.format("%d.%02d (%d)", total_seconds%60, ticks%20 * 5, ticks);
     }
     /*
      * Duration duration = Duration.ofSeconds(seconds);
