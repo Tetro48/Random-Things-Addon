@@ -157,10 +157,10 @@ public class GuiInGameMixin {
         long total_minutes = total_seconds / 60;
         long total_hours = total_minutes / 60;
         long total_days = total_hours / 24;
-        if (total_days > 0) return String.format("%d:%02d:%02d:%02d.%02d (%d)", total_days, total_hours%60, total_minutes%60, total_seconds%60, ticks%20 * 5, ticks);
-        if (total_hours > 0) return String.format("%d:%02d:%02d.%02d (%d)", total_hours%60, total_minutes%60, total_seconds%60, ticks%20 * 5, ticks);
-        if (total_minutes > 0) return String.format("%d:%02d.%02d (%d)", total_minutes%60, total_seconds%60, ticks%20 * 5, ticks);
-        return String.format("%d.%02d (%d)", total_seconds%60, ticks%20 * 5, ticks);
+        if (total_days > 0) return String.format("%d:%02d:%02d:%02d.%02d (%d)", total_days, total_hours%24, total_minutes%60, total_seconds%60, ticks%20 * 5, ticks);
+        if (total_hours > 0) return String.format("%d:%02d:%02d.%02d (%d)", total_hours, total_minutes%60, total_seconds%60, ticks%20 * 5, ticks);
+        if (total_minutes > 0) return String.format("%d:%02d.%02d (%d)", total_minutes, total_seconds%60, ticks%20 * 5, ticks);
+        return String.format("%d.%02d (%d)", total_seconds, ticks%20 * 5, ticks);
     }
     /*
      * Duration duration = Duration.ofSeconds(seconds);
