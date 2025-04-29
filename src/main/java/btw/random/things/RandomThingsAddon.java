@@ -26,6 +26,7 @@ public class RandomThingsAddon extends BTWAddon {
     public static Boolean shouldShowRealTimer;
     public static String timerAlignment;
     public static Boolean precisionMode;
+    public static Boolean warnDurabilityWaste;
 
     public RandomThingsAddon() {
         super();
@@ -45,6 +46,7 @@ public class RandomThingsAddon extends BTWAddon {
         Places timers on some spots.
         # Allowed case-insensitive strings: "Hotbar", "TopLeft", "Top", "TopRight", "BottomLeft", "BottomRight"\s""");
         this.registerProperty("PrecisionMode", "False", "False: Standard level precision (not suitable for speedrunning)\n# True: Highest level, shows ticks");
+        this.registerProperty("WarnDurabilityWaste", "True", "This warns players with a sound when using more durability");
     }
 
     @Override
@@ -64,6 +66,7 @@ public class RandomThingsAddon extends BTWAddon {
                 timerAlignment = "hotbar";
         }
         precisionMode = Boolean.parseBoolean(propertyValues.get("PrecisionMode"));
+        warnDurabilityWaste = Boolean.parseBoolean(propertyValues.get("WarnDurabilityWaste"));
     }
 
     @Override
