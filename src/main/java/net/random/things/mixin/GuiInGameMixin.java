@@ -94,7 +94,7 @@ public class GuiInGameMixin {
     @Unique
     private void renderText(String text, int stringWidth, int iScreenX, int iScreenY, FontRenderer fontRenderer, ArrayList<StatusEffect> activeStatuses){
         ScaledResolution scaledResolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-        boolean isDebugEnabled = this.mc.gameSettings.showDebugInfo;
+        boolean isDebugEnabled = (this.mc.gameSettings.debugScreenState & 1) != 0;
         int initial_top_y = 2 - 10 * amountRendered + 10 * layers - 10;
         int right_x = scaledResolution.getScaledWidth() - stringWidth - 2;
         int bottom_y = scaledResolution.getScaledHeight() - 10 * amountRendered - 12;
